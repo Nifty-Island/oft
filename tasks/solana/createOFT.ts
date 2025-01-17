@@ -116,19 +116,19 @@ interface CreateOFTTaskArgs {
 task('lz:oft:solana:create', 'Mints new SPL Token and creates new OFT Store account')
     .addOptionalParam('amount', 'The initial supply to mint on solana', undefined, devtoolsTypes.int)
     .addParam('eid', 'Solana mainnet or testnet', undefined, devtoolsTypes.eid)
-    .addOptionalParam('localDecimals', 'Token local decimals (default=9)', DEFAULT_LOCAL_DECIMALS, devtoolsTypes.int)
+    .addOptionalParam('localDecimals', 'Token local decimals (default=6)', DEFAULT_SHARED_DECIMALS, devtoolsTypes.int)
     .addOptionalParam('sharedDecimals', 'OFT shared decimals (default=6)', DEFAULT_SHARED_DECIMALS, devtoolsTypes.int)
-    .addParam('name', 'Token Name', 'MockOFT', devtoolsTypes.string)
+    .addParam('name', 'Token Name', 'ISLAND', devtoolsTypes.string)
     .addParam('mint', 'The Token mint public key (used for MABA only)', '', devtoolsTypes.string)
     .addParam('programId', 'The OFT Program id')
     .addParam('sellerFeeBasisPoints', 'Seller fee basis points', 0, devtoolsTypes.int)
-    .addParam('symbol', 'Token Symbol', 'MOFT', devtoolsTypes.string)
+    .addParam('symbol', 'Token Symbol', 'ISLAND', devtoolsTypes.string)
     .addParam('tokenMetadataIsMutable', 'Token metadata is mutable', true, devtoolsTypes.boolean)
     .addParam('additionalMinters', 'Comma-separated list of additional minters', undefined, devtoolsTypes.csv, true)
     .addOptionalParam(
         'onlyOftStore',
         'If you plan to have only the OFTStore and no additional minters.  This is not reversible, and will result in losing the ability to mint new tokens by everything but the OFTStore.',
-        false,
+        true,
         devtoolsTypes.boolean
     )
     .addParam(
@@ -137,7 +137,12 @@ task('lz:oft:solana:create', 'Mints new SPL Token and creates new OFT Store acco
         TOKEN_PROGRAM_ID.toBase58(),
         devtoolsTypes.string
     )
-    .addParam('uri', 'URI for token metadata', '', devtoolsTypes.string)
+    .addParam(
+        'uri',
+        'URI for token metadata',
+        'https://drops.niftyisland.com/island/solana/metadata.json',
+        devtoolsTypes.string
+    )
     .addParam('computeUnitPriceScaleFactor', 'The compute unit price scale factor', 4, devtoolsTypes.float, true)
     .setAction(
         async ({
